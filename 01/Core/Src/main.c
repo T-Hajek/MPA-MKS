@@ -98,11 +98,12 @@ int main(void)
 	while (1)
 	{
 
-		const uint8_t sequence[32] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1};
+		const uint32_t sequence = 0b101010011101110111010101;
 
-		for (uint8_t i = 0; i < 32; ++i) {
-
-			if (sequence[i] == 1) {
+		for (uint8_t i = 0; i < 32; ++i)
+		{
+			if(((sequence >> i) & (uint32_t)1) != 0)
+			{
 				LL_GPIO_SetOutputPin(LD2_GPIO_Port, LD2_Pin);
 			} else {
 				LL_GPIO_ResetOutputPin(LD2_GPIO_Port, LD2_Pin);
@@ -110,7 +111,6 @@ int main(void)
 
 			LL_mDelay(100);
 		}
-
 
 
 		/* USER CODE END WHILE */
