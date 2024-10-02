@@ -79,11 +79,12 @@ static void button()
 	static uint32_t off_time;
 	//static uint32_t old_s1;
 	static uint32_t old_s2;
-	// ADVANCED DEBOUNCING
+
+
+	//------------ ADVANCED DEBOUNCING ------------
 	static uint16_t debounce = 0xFFFF;
 
 	uint32_t new_s2 = LL_GPIO_IsInputPinSet(S2_GPIO_Port, S2_Pin);
-
 
 	//S2 - short time
 	if (old_s2 && !new_s2)
@@ -95,7 +96,7 @@ static void button()
 	old_s2 = new_s2;
 
 
-	//ADVANCED
+	//------------ ADVANCED ------------
 	debounce <<=1;
 	if (LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin)){
 		debounce |= 0x0001;
