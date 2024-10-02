@@ -32,7 +32,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define BLINK_TIME 300
-#define BUTTON_PERIOD 40
+#define BUTTON_PERIOD 5
 #define LED_TIME_SHORT 100
 #define LED_TIME_LONG 1000
 /* USER CODE END PD */
@@ -77,12 +77,15 @@ static void blink(){
 static void button()
 {
 	static uint32_t off_time;
-	static uint32_t old_s1;
+	//static uint32_t old_s1;
 	static uint32_t old_s2;
+	// ADVANCED DEBOUNCING
+	static uint16_t debounce = 0xFFFF;
 
-	uint32_t new_s1 = LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin);
 	uint32_t new_s2 = LL_GPIO_IsInputPinSet(S2_GPIO_Port, S2_Pin);
 
+
+	//S2 - short time
 	if (old_s2 && !new_s2)
 	{
 		// falling edge
@@ -92,14 +95,17 @@ static void button()
 	old_s2 = new_s2;
 
 
-	//S1 - long time
-	if (old_s1 && !new_s1)
+	//ADVANCED
+	debounce <<=1;
+	if (LL_GPIO_IsInputPinSet(S1_GPIO_Port, S1_Pin)){
+		debounce |= 0x0001;
+	}
+
+	if(debounce == 0x7FFF)
 	{
-		// falling edge
 		off_time = Tick + LED_TIME_LONG;
 		LL_GPIO_SetOutputPin(LED2_GPIO_Port, LED2_Pin);
 	}
-	old_s1 = new_s1;
 
 
 
@@ -107,6 +113,7 @@ static void button()
 	{
 		LL_GPIO_ResetOutputPin(LED2_GPIO_Port, LED2_Pin);
 	}
+
 }
 /* USER CODE END 0 */
 
