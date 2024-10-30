@@ -184,7 +184,6 @@ int main(void)
 			break;
 		}
 
-
 		/*switch (currentState) {
             case ADC_MODE:
                 if (HAL_GPIO_ReadPin(S1_GPIO_Port, S1_Pin) == GPIO_PIN_RESET) {
