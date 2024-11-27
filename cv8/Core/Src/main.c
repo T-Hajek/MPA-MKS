@@ -47,6 +47,7 @@ UART_HandleTypeDef huart3;
 /* USER CODE BEGIN PV */
 static volatile char key;
 static const char password[] = {'7','9','3','2','#'};
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
